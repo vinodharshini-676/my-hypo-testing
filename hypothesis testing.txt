@@ -1,0 +1,25 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+import  seaborn as sns
+np.random.seed(42)
+dept_A=np.random.normal(loc=50000,scale=5000,size=30)
+dept_B=np.random.normal(loc=54000,scale=5000,size=30)
+print("Mean Salary dept a:",round(np.mean(dept_A),2))
+print("Mean Salary dept b:",round(np.mean(dept_B),2))
+t_stat,p_value=stats.ttest_ind(dept_A,dept_B)
+print("\nT_Statistic:",round(t_stat,3))
+print("p_value:",round(p_value,4))
+alpha=0.05
+if p_value<alpha:
+    print("✅ Reject Null Hypothesis(Significant Difference)")
+else:
+    print("❌ Fail to Reject Null Hypothesis(No Significant Difference)")
+plt.figure(figsize=(8,5))
+sns.kdeplot(dept_A,fill=True,label="Department A")
+sns.kdeplot(dept_B,fill=True,label="Department B")
+plt.axvline(np.mean(dept_A),linestyle="--")
+plt.axvline(np.mean(dept_B),linestyle="--")
+plt.title("Salary Distribution Comparison")
+plt.legend()
+plt.show()    
